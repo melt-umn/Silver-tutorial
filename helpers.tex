@@ -1,0 +1,152 @@
+
+%%-----------------------------------------
+%% Shortcuts ...
+%%-----------------------------------------
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+
+\newcommand{\x}{\item}
+%%-----------------------------------------
+\newcommand{\eedd}{\end{document}}
+
+\newcommand{\isize}[1]{\setlength{\itemsep}{#1}}
+
+\newcommand{\bis}[1]{\begin{itemize}\setlength{\itemsep}{#1}}
+\newcommand{\bes}[1]{\begin{enumerate}\setlength{\itemsep}{#1}}
+
+
+\newcommand{\biA}{\bis{0.5cm}}
+\newcommand{\biB}{\bis{0.65cm}}
+\newcommand{\biC}{\bis{0.8cm}}
+\newcommand{\biZ}{\bis{0cm}}
+\newcommand{\beA}{\bes{0.5cm}}
+\newcommand{\beB}{\bes{0.65cm}}
+\newcommand{\beC}{\bes{0.8cm}}
+
+\newcommand{\myitem}[2]{\item{#1}\note[item]{#2}}
+
+
+\setbeamerfont{itemize/enumerate body}{}
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\normalsize}
+
+
+\newcommand{\eg}{\emph{e.g.}}
+
+\newcommand\vskipA{\vskip 0.5cm}
+\newcommand\vskipB{\vskip 0.75cm}
+
+
+%\newcommand{\alert}[1]{\textbf{#1}}
+\newcommand{\triple}[3]{\ensuremath{\{#1\}}\ \code{#2}\ \ensuremath{\{#3\}}}
+
+%% Symbols
+\newcommand{\ttlbrace}{\mbox{\tt\symbol{123}}}
+\newcommand{\ttrbrace}{\mbox{\tt\symbol{125}}}
+\newcommand{\ttlbracket}{\mbox{\tt\symbol{133}}}
+\newcommand{\ttrbracket}{\mbox{\tt\symbol{135}}}
+\newcommand{\ttbackslash}{\mbox{\tt\symbol{92}}}
+\newcommand{\tthat}{\mbox{\tt\symbol{94}}}
+\newcommand{\ttat}{\mbox{\tt\symbol{64}}}
+\newcommand{\tttilde}{\mbox{\tt\symbol{126}}}
+\newcommand{\kwd}[1]{\textbf{#1}}
+
+\newcommand{\back}{\ensuremath{\backslash}}
+\newcommand{\defas}{\triangleq}
+
+
+%% Counters
+\newcounter{backupcounter}
+\newcounter{exercounter}
+\setcounter{exercounter}{0}
+
+
+
+%% Colors
+\setbeamercolor{redcolor}{fg=red}
+\newcommand{\hir}[1]{{\usebeamercolor[fg]{redcolor}#1}}
+
+
+\setbeamercolor{bluecolor}{fg=blue}
+
+\definecolor{dgreen}{rgb}{0.0,0.6,0.0}
+\definecolor{dblue}{rgb}{0.0,0.0,1.0}
+\definecolor{whilte}{rgb}{0.0,0.0,0.0}
+
+%\newcommand{\hib}[1]{{\usebeamercolor[fg]{bluecolor}#1}}
+
+\newcommand{\hib}[1]{{\textcolor{dblue}{#1}}}
+\newcommand{\hig}[1]{{\textcolor{dgreen}{#1}}}
+\newcommand{\hiw}[1]{{\textcolor{white}{#1}}}
+
+%\newcommand{\code}[1]{\texttt{\usebeamercolor[fg]{bluecolor}#1}}
+%\newcommand{\code}[1]{\texttt{\hig{#1}}}
+\newcommand{\code}[1]{\texttt{\hib{#1}}}
+\newcommand{\nt}[1]{\ensuremath{\langle\mathit{#1}\rangle}}
+\newcommand{\term}[1]{\ensuremath{\mathit{#1}_t}}
+\newcommand{\termlit}[1]{``\ensuremath{\mathit{#1}}''}
+
+%\newcommand{\frametitle}[1]{}
+
+%\newcommand{\ftitle}[1]{\renewcommand{\frametitle}{#1}}
+
+%% Environments - default setting, modified in
+%% task_(screen|guide|notes).tex
+
+
+
+\newcommand{\pnum}{Slide \#\arabic{framenumber}}
+\newcommand{\nonotes}{\note{\pnum{} No notes for this slide}}
+\newcommand{\guideonly}[1]{\mode<handout>{#1}}
+
+%\newcommand{\
+
+\newenvironment{exercise}[1]{\stepcounter{exercounter}%
+    \begin{frame}[containsverbatim,t]{Exercise \#\arabic{exercounter}: #1}}{\end{frame}}
+
+%\newenvironment{exercise}[1]{\stepcounter{exercounter}%
+%    \begin{frame}<beamer|notes>[t]{Exercise \#\arabic{exercounter}:#1}}{\end{frame}}
+
+
+% set up footer with frame number
+\setbeamertemplate{footline}[text line]{%
+ \parbox{\linewidth}{\vspace*{-8pt}\hfill\insertframenumber}}
+
+% hide those navigation symbols
+\setbeamertemplate{navigation symbols}{} 
+
+
+%
+% Note page template
+% ---- ---- --------
+%
+\setbeamertemplate{note page}{%
+%\begin{minipage}[c]{0.6\textwidth}
+
+\textbf{Note.} \hib{\insertframetitle{}}
+\insertframenumber{} / \inserttotalframenumber 
+
+%\end{minipage}
+%\begin{minipage}[c]{0.39\textwidth}
+%\insertslideintonotes{0.5}
+%\end{minipage}
+
+%\begin{figure}
+%\insertslideintonotes{0.25}
+%\end{figure}
+
+% 720p in 3-111
+% 12x8 in Tate
+
+%{\footnotesiz
+
+\insertnote
+
+}
+
+\newcommand{\nonote}{\note{No Note. \\ \insertslideintonotes{0.85}}}
+\newcommand{\stopcounting}{\setcounter{backupcounter}{\value{framenumber}}}
+\newcommand{\startcounting}{\setcounter{framenumber}{\value{backupcounter}}}
