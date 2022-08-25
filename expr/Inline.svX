@@ -1,0 +1,64 @@
+-- without references
+
+grammar expr;
+
+
+synthesized attribute inline<a> :: a ;
+attribute inline<Expr> occurs on Expr;
+attribute inline<Root> occurs on Root;
+
+-- Show this second
+-- functor attribute inline occurs on Expr, Root;
+
+inherited attribute to_inline :: [ (String, Expr) ] occurs on Expr;
+
+aspect production root
+r::Root ::= e::Expr
+{
+  r.inline = root(e.inline);
+  e.to_inline = [];
+}
+
+aspect production let_
+e::Expr ::= name::String dexp::Expr body::Expr
+{
+  e.inline = body.inline;
+  dexp.to_inline = e.to_inline;
+  body.to_inline = (name, dexp.inline) :: e.to_inline;
+}
+
+aspect production or_
+e::Expr ::= l::Expr r::Expr
+{
+  propagate to_inline;
+  e.inline = or_ (l.inline, r.inline);
+}
+aspect production and_
+e::Expr ::= l::Expr r::Expr
+{
+  propagate to_inline;
+  e.inline = and_ (l.inline, r.inline);
+--  propagate to_inline, inline;
+}
+aspect production true_
+e::Expr ::=
+{
+  e.inline = true_();
+}
+aspect production false_
+e::Expr ::=
+{
+  e.inline = false_();
+}
+aspect production ref
+e::Expr ::= name::String
+{
+  e.inline = case lookup( name, e.to_inline) of 
+          | just(inline_expr) -> inline_expr
+
+          | just(e) -> 
+          | _ -> error ("Name " ++ "\"name\"" ++ " not declared.")
+          end;
+}
+
+

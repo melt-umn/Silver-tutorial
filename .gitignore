@@ -1,0 +1,14 @@
+*~
+
+build.xml
+*.jar
+
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+
+*.pdf

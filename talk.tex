@@ -1,12 +1,12 @@
 %\documentclass[notes,handout,11pt,aspectratio=169]{beamer}
-\documentclass[notes,11pt,aspectratio=169]{beamer}
+%\documentclass[notes,11pt,aspectratio=169]{beamer}
 
 % The following creates extra wide pages containing the main
 % slide and any accompanying notes next to it.
-\usepackage{pgfpages}\setbeameroption{show notes on second screen=right}
+%\usepackage{pgfpages}\setbeameroption{show notes on second screen=right}
 
 
-%\documentclass[11pt,aspectratio=169]{beamer}
+\documentclass[11pt,aspectratio=169]{beamer}
 
 
 \usepackage{epsfig}
@@ -66,6 +66,279 @@
 \newcommand{\ableC}{\textsc{ableC}}
 \newcommand{\silver}{\textsc{Silver}}
 
+
+% Attribution animation commands
+\newcommand{\ys}{1.3}
+
+\newcommand{\enve}[2]{\draw[blue] ($(#1-0.4,\ys*#2-0.35)$) circle(0.15);}
+\newcommand{\envd}[2]{\filldraw[blue] ($(#1-0.4,\ys*#2-0.35)$) circle(0.05);}
+\newcommand{\envc}[2]{\filldraw[blue] ($(#1-0.4,\ys*#2-0.35)$) circle(0.15);}
+
+\newcommand{\ppe}[2]{\draw[dgreen] ($(#1+0.4,\ys*#2-0.35)$) circle(0.15);}
+\newcommand{\ppd}[2]{\filldraw[dgreen] ($(#1+0.4,\ys*#2-0.35)$) circle(0.05);}
+\newcommand{\ppc}[2]{\filldraw[dgreen] ($(#1+0.4,\ys*#2-0.35)$) circle(0.15);}
+
+\newcommand{\vale}[2]{\draw[red] ($(#1+0.8,\ys*#2-0.35)$) circle(0.15);}
+\newcommand{\vald}[2]{\filldraw[red] ($(#1+0.8,\ys*#2-0.35)$) circle(0.05);}
+\newcommand{\valc}[2]{\filldraw[red] ($(#1+0.8,\ys*#2-0.35)$) circle(0.15);}
+
+\newcommand{\erre}[2]{\draw[orange] ($(#1+1.2,\ys*#2-0.35)$) circle(0.15);}
+\newcommand{\errd}[2]{\filldraw[orange] ($(#1+1.2,\ys*#2-0.35)$) circle(0.05);}
+\newcommand{\errc}[2]{\filldraw[orange] ($(#1+1.2,\ys*#2-0.35)$) circle(0.15);}
+
+\newcommand{\pptopp}[4]
+{\draw[dgreen,->] ($(#1+0.4,\ys*#2-0.35)$) -- ($(#3+0.4,\ys*#4-0.35)$);}
+\newcommand{\pptoppw}[4]
+{\draw[white,->] ($(#1+0.4,\ys*#2-0.35)$) -- ($(#3+0.4,\ys*#4-0.35)$);}
+
+\newcommand{\envtoenv}[4]
+{\draw[blue,->] ($(#1-0.4,\ys*#2-0.35)$) -- ($(#3-0.4,\ys*#4-0.35)$); }
+
+\newcommand{\envtoval}[4]
+{\draw[blue,->] ($(#1-0.4,\ys*#2-0.35)$) -- ($(#3+0.8,\ys*#4-0.35)$); }
+
+\newcommand{\valtoval}[4]
+{\draw[red,->] ($(#1+0.8,\ys*#2-0.35)$) -- ($(#3+0.8,\ys*#4-0.35)$); }
+
+\newcommand{\valtoenv}[4]
+{\draw[red,->] ($(#1+0.8,\ys*#2-0.35)$) -- ($(#3-0.4,\ys*#4-0.35)$); }
+
+\newcommand{\rtn}[3]{
+% production
+\draw ($(#1,#2*\ys)$) node{#3};
+% pp
+\ppe{#1}{#2}
+% val
+\vale{#1}{#2}
+% errors
+%\erre{#1}{#2}
+
+\draw[gray] ($(#1+0.65,\ys*#2+0.25)$) --
+            ($(#1-0.3,\ys*#2+0.25)$) arc (90:270:4.5mm);
+
+\draw[gray] ($(#1+0.65,\ys*#2+0.25)$) arc (90:-90:4.5mm) -- 
+            ($(#1-0.3,\ys*#2-0.65)$) ;
+}
+
+\newcommand{\rtnna}[3]{
+% production
+\draw ($(#1,#2*\ys)$) node{#3};
+% pp
+%\ppe{#1}{#2}
+% val
+%\vale{#1}{#2}
+% errors
+%\erre{#1}{#2}
+
+\draw[gray] ($(#1+0.65,\ys*#2+0.25)$) --
+            ($(#1-0.3,\ys*#2+0.25)$) arc (90:270:4.5mm);
+
+\draw[gray] ($(#1+0.65,\ys*#2+0.25)$) arc (90:-90:4.5mm) -- 
+            ($(#1-0.3,\ys*#2-0.65)$) ;
+}
+
+\newcommand{\tnna}[3]{
+\rtnna{#1}{#2}{#3}
+%\enve{#1}{#2}
+}
+
+\newcommand{\tn}[3]{
+\rtn{#1}{#2}{#3}
+\enve{#1}{#2}
+}
+
+\newcommand{\tnstr}[3]{
+\draw ($(#1,#2*\ys)$) node{#3};
+\draw[gray] ($(#1+0.25,\ys*#2+0.25)$) --
+            ($(#1-0.2,\ys*#2+0.25)$) arc (90:270:2.5mm);
+
+\draw[gray] ($(#1+0.25,\ys*#2+0.25)$) arc (90:-90:2.5mm) -- 
+            ($(#1-0.2,\ys*#2-0.25)$) ;
+
+}
+
+\newcommand{\tedge}[4]{
+\draw[gray] ($(#1+\xsh,\ys*#2-0.65)$) -- ($(#3+\xsh,\ys*#4+0.25)$);
+}
+
+\newcommand{\ppeval}{
+% pp evaluation
+\pause
+\ppd{4}{4} %root
+\pause
+\ppd{4}{3} %let
+
+\pause
+\ppd{4}{2} %true-let
+\pause
+\ppc{4}{2} %true-let
+\pause
+\ppd{6.5}{2}  %and
+
+\pause
+\ppd{5.25}{1} %true-and
+\pause
+\ppc{5.25}{1} %true-and
+\pause
+\ppd{7.75}{1} %ref
+\pause
+\ppc{7.75}{1} %ref
+
+\pause
+\ppc{6.5}{2}  %and
+
+\pause
+\ppc{4}{3} %let
+
+\pause
+\ppc{4}{4} %root
+}
+
+\newcommand{\valeval}{
+% val evaluation
+\pause\vald{4}{4} %root
+\pause\vald{4}{3} %let
+
+\pause\vald{6.5}{2}  %and
+\pause\vald{5.25}{1} %true-and
+\pause\valc{5.25}{1} %true-and
+
+\pause\vald{7.75}{1} %ref
+
+\pause\envd{7.75}{1} %ref
+
+\pause\envd{6.5}{2}  %and
+
+\pause
+\draw ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = addEnv(name, dval.val, e.env);}};
+
+\pause\vald{4}{2} %true-let
+\pause\valc{4}{2} %true-let
+
+\pause\envd{4}{3} %let
+\pause\envc{4}{3} %let
+
+\pause\envc{6.5}{2}  %and
+
+\pause
+\draw[white] ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = addEnv(name, dval.val, e.env);}};
+
+\pause\envc{7.75}{1} %ref
+
+\pause\valc{7.75}{1} %ref
+\pause\valc{6.5}{2}  %and
+
+\pause\valc{4}{3} %let
+
+\pause\valc{4}{4} %root
+}
+
+\newcommand{\xsh}{0.15}
+
+
+
+\newcommand{\rtne}[3]{
+% production
+\draw ($(#1,#2*\ys)$) node{#3};
+\ppe{#1}{#2}
+\vale{#1}{#2}
+\erre{#1}{#2}
+
+\draw[gray] ($(#1+1.1,\ys*#2+0.25)$) --
+            ($(#1-0.3,\ys*#2+0.25)$) arc (90:270:4.5mm);
+
+\draw[gray] ($(#1+1.1,\ys*#2+0.25)$) arc (90:-90:4.5mm) -- 
+            ($(#1-0.3,\ys*#2-0.65)$) ;
+}
+
+\newcommand{\tne}[3]{
+\rtne{#1}{#2}{#3}
+\enve{#1}{#2}
+}
+
+\newcommand{\ppevalimplies}{
+\pause\ppc{6.5}{2} %implies
+
+\ppc{5.25}{1} % imp-true
+\ppc{7.75}{1}% imp-ref
+
+
+}
+\newcommand{\erroreval}{
+
+
+%\errd{5.25}{1} % imp-true
+%\errd{7.75}{1}% imp-ref
+
+\pause\errd{11.5}{2} % or
+\pause\errd{10.25}{1} % not
+\pause\errd{10.25}{0} % or-true
+
+\pause\errc{10.25}{0} % or-true
+\pause\errc{10.25}{1} % not
+
+\pause\errd{12.75}{1} % or-ref
+\pause\envd{12.75}{1} % or-ref
+\pause\envd{11.5}{2} % or
+
+\pause\envd{6.5}{2} %implies
+\pause\envc{6.5}{2} %implies
+
+\pause\envc{11.5}{2} % or
+
+\pause\envc{12.75}{1} % or-ref
+\pause\errc{12.75}{1} % or-ref
+
+\pause\errc{11.5}{2} % or
+
+\pause\errc{6.5}{2} %implies
+
+}
+
+
+\newcommand{\showimplies}{
+\ifthenelse{\boolean{showanim}}{\errc{3.5}{0}\draw (5.5,-0.35) node{inline};}{}
+
+\tedge{5.5}{3}{6.5}{2}
+\tne{6.5}{2}{\ \ implies}
+\tedge{6.5}{2}{5.25}{1}
+\tedge{6.5}{2}{7.75}{1}
+
+
+
+\tne{5.25}{1}{true}
+
+\tne{7.75}{1}{ref}
+\tedge{7.75}{1}{7.75}{0}
+
+\tnstr{7.85}{0}{"n"}
+
+\ppevalimplies
+
+\pause\errd{6.5}{2} %implies
+
+\pause
+\draw[thick,->] ($(8.25,\ys*1.85)$) -- ($(10.55,\ys*1.85)$);
+
+\tne{11.5}{2}{or}
+\tedge{11.5}{2}{10.25}{1}
+\tedge{11.5}{2}{12.75}{1}
+
+\tne{10.25}{1}{not}
+\tedge{10.25}{1}{10.25}{0}
+
+\tne{10.25}{0}{true}
+
+\tne{12.75}{1}{ref}
+\tedge{12.75}{1}{12.75}{0}
+
+\tnstr{12.85}{0}{"n"}
+
+\erroreval
+}
+
+
+
 \begin{document}
 
 \begin{frame}
@@ -80,10 +353,10 @@
 \hib{Composable and Modular Language Specifications}}
 
 \vskip 1cm
-University of Minnesota
+Lucas Kramer and Eric Van Wyk
 
 \medskip
-Lucas Kramer and Eric Van Wyk
+University of Minnesota
 
 \bigskip
 August 26, 2022
@@ -91,7 +364,7 @@ August 26, 2022
 \end{center}
 \end{frame}
 
-%\note{Attribute grammars were invented in 1968 by Donald Knuth as a formalism for specifying the semantics of context free languages. Attributes decorate syntax tree nodes to indicate, for example, the type of an expression or the environment for looking up identifier types or values.  Equations over attributes determine these values. Since then the formalism's popularity had waxed and waned but has been continually extended with new features to become an expressive paradigm for specifying many kinds of analyses and translations of programming languages.  This talk will cover several of these extensions; including higher-order attributes, in which attributes can themselves be syntax trees, reference attributes, in which attributes are references to other nodes in the decorated tree, and forwarding, a mechanism that supports the composition of language extension specifications.}
+%\note{Attribute grammars were invented in 1968 by Donald Knuth as a formalism for specifying the semantics of context free languages. Attributes decorate syntax tree nodes to indicate, for example, the type of an expression or the environment for looking up identifier types or values.  Equations over attributes determine these values. Since then the formalism's popularity had waxed and waned but has been continually extended with new features to become an expressive paradigm for specifying many kinds of analyspes and translations of programming languages.  This talk will cover several of these extensions; including higher-order attributes, in which attributes can themselves be syntax trees, reference attributes, in which attributes are references to other nodes in the decorated tree, and forwarding, a mechanism that supports the composition of language extension specifications.}
 
 %\note{This talk will demonstrate several of these features as they are realized in the Silver attribute grammar system.  Examples are drawn from ableC, an extensible specification of C written in Silver, and several language extensions that add new syntax and static semantics to the C host language.  These include extensions for parallel programming inspired the by Cilk, Halide, and Taco systems, ML-style algebraic data types with pattern matching, regular expression literals and matching, and others.  Silver was designed to support the automatic composition of independently-developed language extensions such as these.  This allows programmers to import new features into their compilers with the same ease as which they import libraries into their programs.  Static analyses and constructs in Silver that support this style of modular language design are a focus of the demonstrations.}
 
@@ -115,7 +388,7 @@ August 26, 2022
 Motivated by 4 questions
 
 \bigskip\pause
-\beA
+\bes{0.3cm}
 \x Can programming languages be constructed from composable modules, \\
    each defining an extension to a host language?
 
@@ -133,6 +406,11 @@ Motivated by 4 questions
    \bigskip
    Distinguish the roles of extension developer and extension user
    (the programmer).
+
+   \pause
+   \bigskip
+   For example, can one add Cilk-style parallelism, algebraic data types,
+   and regular expressions to C?
 \ee
 
 \note{\bi
@@ -179,6 +457,7 @@ typedef \hib{datatype Tree} Tree; \\
 \end{frame}
 
 
+\begin{comment}
 \begin{frame}{A demonstration}
 
 \ableC{} - Attribute grammar-Based Language Extensions for C
@@ -200,7 +479,7 @@ typedef \hib{datatype Tree} Tree; \\
 \ei
 }
 \end{frame}
-
+\end{comment}
 
 
 \begin{frame}[fragile]{\ableC - extensible specification of C11}
@@ -210,7 +489,7 @@ typedef \hib{datatype Tree} Tree; \\
 
 \vskip 0.1cm
 
-\uncover<1->{\exts{algebraicDataType}} \\
+\uncover<1->{\exts{algebraicDataTypes}} \\
 \uncover<1->{\exts{cilk}} \\
 \uncover<1->{\exts{regEx}}
 
@@ -285,6 +564,436 @@ $\Uparrow$}
 }
 \end{frame}
 
+
+
+
+
+
+
+\begin{frame}{Reliably composable language extensions}
+\biA
+\x Extension \hib{developers} work independently.
+
+\x Extension \hib{users} use multiple extensions.
+ \bi
+  \x not experts in language design
+  \x combinations of extensions must ``just work''
+ \ei
+\x We draw a hard distinction between these two roles.
+\ei
+\note{\bi
+\x We \hib{distinguish these two roles}!
+\ei
+}
+\end{frame}
+
+\begin{frame}[t]{Challenges for composable language extensions}
+%Two primary challenges:
+\be
+ \x syntax ---     context free grammars / regular expressions
+
+    need a deterministic parser and scanner
+
+  \bi
+   \x<2-> context-aware scanning %~\cite{vanwyk07gpce}
+   \x<4-> \hib{modular determinism analysis} %~\cite{schwerdfeger09pldi} 
+   \x<5-> Copper
+  \ei
+%\vskip 0.5cm
+ \x static semantics ---     attribute grammars
+    
+    need complete static analysis and translations
+
+  \bi
+   \x<3-> forwarding % - solves the ``expression problem''
+   \x<3-> set union of specification components
+    \bi
+     \x sets of productions, non-terminals, attributes
+     \x sets of attribute defining equations, on a production
+     \x sets of equations contributing values to a single attribute
+    \ei
+   \x<4-> \hib{modular well-definedness analysis} %~\cite{kaminski12sle}
+%   \x<5-> modular termination analysis %~\cite{krishnan12sle,krishnan12phd}
+   \x<5-> Silver
+  \ei
+\ee
+
+\end{frame}
+
+
+
+\begin{frame}[t,fragile]{Representing Programs}
+Consider a let-expressions language: 
+``\code{let n = true in false || n}''
+
+\bigskip
+
+\begin{minipage}[t]{2.9in}
+\vspace{0pt}
+\begin{tikzpicture}
+
+%\draw ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = addEnv(name, dval.val, e.env);}};
+
+% env on the side
+%\envc{1.8}{4}
+%\draw (1.9,4.85) node{env};
+
+%\ppc{1}{3.5}
+%\draw (1.84,4.18) node{pp};
+
+%\valc{0.6}{3}
+%\draw (1.88,3.6) node{val};
+
+\rtnna{4}{4}{root}
+\tedge{4}{4}{4}{3}
+
+\tnna{4}{3}{let}
+\tedge{4}{3}{2.0}{2}
+\tedge{4}{3}{4}{2}
+\tedge{4}{3}{6.5}{2}
+
+\tnstr{2.0}{2}{"n"}
+
+\tnna{4}{2}{true}
+
+\tnna{6.5}{2}{or}
+\tedge{6.5}{2}{5.25}{1}
+\tedge{6.5}{2}{7.75}{1}
+
+\tnna{5.25}{1}{false}
+
+\tnna{7.75}{1}{ref}
+\tedge{7.75}{1}{7.75}{0}
+
+\tnstr{7.85}{0}{"n"}
+
+%\ppeval
+
+%\valeval
+\end{tikzpicture}
+\end{minipage}
+\begin{minipage}[t]{2.1in}
+\vspace{0pt}
+\small
+\begin{verbatim}
+nonterminal Root, Expr;
+
+production root
+ r::Root ::= e::Expr
+
+production let
+ e::Expr ::= name::String 
+    dval::Expr body::Expr
+
+production or
+ e::Expr ::= l::Expr r::Expr
+
+production ref
+ e::Expr := name::String
+\end{verbatim}
+\end{minipage}
+
+\end{frame}
+
+
+
+
+\begin{frame}[t,fragile]{Attributes: attaching semantic values}
+Can we pretty-print and evaluate the expression
+``\code{let n = true in false || n}'' ?
+
+\bigskip
+
+\begin{minipage}[t]{2.9in}
+\vspace{0pt}
+\begin{tikzpicture}
+
+%\draw ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = addEnv(name, dval.val, e.env);}};
+
+% env on the side
+\envc{2.3}{4}
+\draw (2.4,4.85) node{env};
+
+\ppc{1.5}{3.5}
+\draw (2.34,4.18) node{pp};
+
+\valc{1.1}{3}
+\draw (2.38,3.6) node{val};
+
+\rtn{4}{4}{root}
+\tedge{4}{4}{4}{3}
+
+\tn{4}{3}{let}
+\tedge{4}{3}{2.0}{2}
+\tedge{4}{3}{4}{2}
+\tedge{4}{3}{6.5}{2}
+
+\tnstr{2.0}{2}{"n"}
+
+\tn{4}{2}{true}
+
+\tn{6.5}{2}{or}
+\tedge{6.5}{2}{5.25}{1}
+\tedge{6.5}{2}{7.75}{1}
+
+\tn{5.25}{1}{false}
+
+\tn{7.75}{1}{ref}
+\tedge{7.75}{1}{7.75}{0}
+
+\tnstr{7.85}{0}{"n"}
+
+%\ppeval
+
+%\valeval
+\end{tikzpicture}
+\end{minipage}
+\begin{minipage}[t]{2.1in}
+\vspace{0pt}
+\small
+\begin{verbatim}
+synthesized attribute pp::String;
+synthesized attribute val::Boolean;
+
+inherited attribute 
+  env::[(String,Boolean)];
+
+attribute pp  occurs on Root, Expr;
+attribute val occurs on Root, Expr;
+attribute env occurs on Expr;
+\end{verbatim}
+\end{minipage}
+
+\end{frame}
+
+\begin{frame}{Equations}
+Let's look at some Silver specifications for this.
+
+\bigskip
+See \code{AbstractSyntax.sv}
+\end{frame}
+
+
+\begin{frame}[t,fragile]{Evaluating attributes}
+Demand \code{pp}, then demand \code{val} in ``\code{let n = true in false || n}''
+
+\bigskip
+
+\begin{minipage}[t]{2.9in}
+\vspace{0pt}
+\begin{tikzpicture}
+
+%\draw ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = addEnv(name, dval.val, e.env);}};
+
+\envc{2.3}{4}
+\draw (2.4,4.85) node{env};
+
+\ppc{1.5}{3.5}
+\draw (2.34,4.18) node{pp};
+
+\valc{1.1}{3}
+\draw (2.38,3.6) node{val};
+
+\rtn{4}{4}{root}
+\tedge{4}{4}{4}{3}
+
+\tn{4}{3}{let}
+\tedge{4}{3}{2.0}{2}
+\tedge{4}{3}{4}{2}
+\tedge{4}{3}{6.5}{2}
+
+\tnstr{2.0}{2}{"n"}
+
+\tn{4}{2}{true}
+
+\tn{6.5}{2}{or}
+\tedge{6.5}{2}{5.25}{1}
+\tedge{6.5}{2}{7.75}{1}
+
+\tn{5.25}{1}{false}
+
+\tn{7.75}{1}{ref}
+\tedge{7.75}{1}{7.75}{0}
+
+\tnstr{7.85}{0}{"n"}
+
+\ppeval
+
+\valeval
+\end{tikzpicture}
+\end{minipage}
+\begin{minipage}[t]{2.1in}
+\vspace{0pt}
+
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}{Higher order attributes}
+\biA
+ \x Synthesized and inherited attributes can be \hib{syntax trees}.
+
+ \x Such a tree can be ``rooted'' so that
+  \bi
+   \x by giving it inherited attributes
+   \x synthesized attributes can be computed and accessed.
+  \ei
+
+ \x \code{synthesized attribute inline :: Expr occurs on Expr;}
+
+    \medskip
+    A program transformation to inline the identifies.
+
+ \x We see this in \code{Inline.sv}
+\ei
+\end{frame}
+
+\begin{frame}{Automatic attributes}
+\biA
+ \x Many equations follow a predictable pattern can be generated to
+ \hib{propagate} values in the expected way.
+
+ \x For inherited attributes - just copy them down the tree
+
+ \x For rewriting attributes - recreate the node with the rewritten
+ children
+
+ \x \code{propagate} performs this generation
+ \x \code{inherited}, \code{functor} attributes and others can then
+ have equations generated
+
+ \x See \code{Inline.sv} again.
+\ei
+\end{frame}
+
+\begin{frame}{Reference attributes}
+\bis{0.3cm}
+\x These are ``references'' to remote decorated tree nodes.
+
+   \medskip
+   We can access attributes from references, just as on child nodes.
+
+\pause
+\x We saw 2 environments to provide
+  \be
+   \x the value and 
+   \x the inlined expression
+  \ee
+  for name uses.
+
+\x Can we instead map names to a tree node describing the declaration which
+   may have this information.
+
+   \medskip
+   What kind of tree node should be the target?
+
+   \medskip
+   Not \code{Expr}, a bit of refactoring is needed to create a
+   declaration node type \code{Decl}.
+
+\x \code{inherited attribute env :: [ (String, Decorated Decl) ];}
+
+\x This requires a bit of refactoring - \code{Inline\_Refs.sv}
+\ei
+\end{frame}
+
+
+\begin{frame}{Language Extensions - FIXME}
+\biA
+\x refactor inlining out into an extension
+\x create the \code{implies} production in another extension
+\x how does implies know about inlining?
+\x this motivates forwarding
+\ei
+\end{frame}
+
+
+\begin{frame}[fragile,t]{Forwarding}
+The ``no glue code'' component.
+
+{\small
+\begin{verbatim}
+production implies
+e::Expr ::=  l::Expr  r::Expr
+{ e.pp = "(" ++ l.pp ++ "=>" ++ r.pp ++ ")";
+  forwards to or( not(l), r ); {- expr, not template -}  }
+\end{verbatim}
+}
+
+\begin{tikzpicture}
+\showimplies
+\end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}[t]{Modular Well-definedness Analysis}
+How can we ensure that independent extensions will compose?
+
+\medskip
+How can we ensure that there are no missing equations in the
+composition by looking at the extensions individually?
+
+\bigskip
+
+$\mathit{complete} ( H \cup \{ E_1, ... , E_n \} ) $ \ \ ?
+
+%\pause
+\bigskip
+
+$\forall i \in [1,n] . \mathit{modComplete}(H, E_i) 
+ \Rightarrow \mathit{complete}( H \cup \{ E_1, ..., E_n \} )$
+
+\bigskip
+In three parts:
+\be
+ \x well-formedness
+ \x synthesized completeness
+ \x effective inherited completeness
+\ee
+\end{frame}
+
+
+\begin{frame}{Thanks}
+\end{frame}
+
+
+\end{document}
+
+\begin{frame}{Table of Contents}
+\bi
+\x ASTs - how we represent a program
+\bi
+\x \code{let n = true in false || n},  show the tree
+\x show the context free grammar - nonterminals and productions
+\x slides 35 and previous in other talk
+\ei
+\x AGs - how we type check, analyze, and translate that program
+\bi
+\x attributes decorate nodes
+\x show tree with the dots all filled in - think of these as records
+\x fill in AG with attributes A and occurs on relation 
+
+\x equations specify their value
+
+\x new analysis/transformation - inlining
+
+\x higher order - maybe a translation to something - a stack machine
+for evaluation
+
+\x new productions - 
+\x reference attributes
+
+\x forwarding
+
+\x MWDA
+\ei
+\ei
+\end{frame}
+
+
+
+% 999 
 \eedd
 
 \begin{comment}
@@ -598,55 +1307,6 @@ But it requires
 
 
 
-\begin{frame}{Reliably composable language extensions}
-\biA
-\x Extension \hib{developers} work independently.
-
-\x Extension \hib{users} use multiple extensions.
- \bi
-  \x not experts in language design
-  \x combinations of extensions must ``just work''
- \ei
-\x We draw a hard distinction between these two roles.
-\ei
-\note{\bi
-\x We \hib{distinguish these two roles}!
-\ei
-}
-\end{frame}
-
-\begin{frame}[t]{Challenges for composable language extensions}
-%Two primary challenges:
-\be
- \x syntax ---     context free grammars / regular expressions
-
-    need a deterministic parser and scanner
-
-  \bi
-   \x<2-> context-aware scanning %~\cite{vanwyk07gpce}
-   \x<4-> \hib{modular determinism analysis} %~\cite{schwerdfeger09pldi} 
-   \x<5-> Copper
-  \ei
-%\vskip 0.5cm
- \x static semantics ---     attribute grammars
-    
-    need complete static analysis and translations
-
-  \bi
-   \x<3-> forwarding % - solves the ``expression problem''
-   \x<3-> set union of specification components
-    \bi
-     \x sets of productions, non-terminals, attributes
-     \x sets of attribute defining equations, on a production
-     \x sets of equations contributing values to a single attribute
-    \ei
-   \x<4-> \hib{modular well-definedness analysis} %~\cite{kaminski12sle}
-%   \x<5-> modular termination analysis %~\cite{krishnan12sle,krishnan12phd}
-   \x<5-> Silver
-  \ei
-\ee
-
-\end{frame}
 
 \begin{comment}
 \begin{frame}{An analogy}
@@ -1455,7 +2115,7 @@ e::Expr := name::String
 \pause\envd{6.5}{2}  %and
 
 \pause
-\draw ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = addEnv(name, dval.val, e.env);}};
+\draw ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = (name, dexp.val) :: e.env;}};
 
 \pause\vald{4}{2} %true-let
 \pause\valc{4}{2} %true-let
@@ -1466,7 +2126,7 @@ e::Expr := name::String
 \pause\envc{6.5}{2}  %and
 
 \pause
-\draw[white] ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = addEnv(name, dval.val, e.env);}};
+\draw[white] ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = (name, dexp.val) :: e.env;}};
 
 \pause\envc{7.75}{1} %ref
 
@@ -1765,106 +2425,6 @@ But what is \code{errors} on \code{implies} ?
 
 
 
-
-\newcommand{\rtne}[3]{
-% production
-\draw ($(#1,#2*\ys)$) node{#3};
-\ppe{#1}{#2}
-\vale{#1}{#2}
-\erre{#1}{#2}
-
-\draw[gray] ($(#1+1.1,\ys*#2+0.25)$) --
-            ($(#1-0.3,\ys*#2+0.25)$) arc (90:270:4.5mm);
-
-\draw[gray] ($(#1+1.1,\ys*#2+0.25)$) arc (90:-90:4.5mm) -- 
-            ($(#1-0.3,\ys*#2-0.65)$) ;
-}
-
-\newcommand{\tne}[3]{
-\rtne{#1}{#2}{#3}
-\enve{#1}{#2}
-}
-
-\newcommand{\ppevalimplies}{
-\pause\ppc{6.5}{2} %implies
-
-\ppc{5.25}{1} % imp-true
-\ppc{7.75}{1}% imp-ref
-
-
-}
-\newcommand{\erroreval}{
-
-
-%\errd{5.25}{1} % imp-true
-%\errd{7.75}{1}% imp-ref
-
-\pause\errd{11.5}{2} % or
-\pause\errd{10.25}{1} % not
-\pause\errd{10.25}{0} % or-true
-
-\pause\errc{10.25}{0} % or-true
-\pause\errc{10.25}{1} % not
-
-\pause\errd{12.75}{1} % or-ref
-\pause\envd{12.75}{1} % or-ref
-\pause\envd{11.5}{2} % or
-
-\pause\envd{6.5}{2} %implies
-\pause\envc{6.5}{2} %implies
-
-\pause\envc{11.5}{2} % or
-
-\pause\envc{12.75}{1} % or-ref
-\pause\errc{12.75}{1} % or-ref
-
-\pause\errc{11.5}{2} % or
-
-\pause\errc{6.5}{2} %implies
-
-}
-
-
-\newcommand{\showimplies}{
-\ifthenelse{\boolean{showanim}}{\errc{3.5}{0}\draw (5.5,-0.35) node{errors};}{}
-
-\tedge{5.5}{3}{6.5}{2}
-\tne{6.5}{2}{\ \ implies}
-\tedge{6.5}{2}{5.25}{1}
-\tedge{6.5}{2}{7.75}{1}
-
-
-
-\tne{5.25}{1}{true}
-
-\tne{7.75}{1}{ref}
-\tedge{7.75}{1}{7.75}{0}
-
-\tnstr{7.85}{0}{"n"}
-
-\ppevalimplies
-
-\pause\errd{6.5}{2} %implies
-
-\pause
-\draw[thick,->] ($(8.25,\ys*1.85)$) -- ($(10.55,\ys*1.85)$);
-
-\tne{11.5}{2}{or}
-\tedge{11.5}{2}{10.25}{1}
-\tedge{11.5}{2}{12.75}{1}
-
-\tne{10.25}{1}{not}
-\tedge{10.25}{1}{10.25}{0}
-
-\tne{10.25}{0}{true}
-
-\tne{12.75}{1}{ref}
-\tedge{12.75}{1}{12.75}{0}
-
-\tnstr{12.85}{0}{"n"}
-
-\erroreval
-}
 
 
 \begin{frame}[fragile,t]{Forwarding}
