@@ -54,6 +54,8 @@ concrete productions e::AndExpr_c
    { e.ast = e1.ast; }
 
 concrete productions e::PrimExpr_c
+ | '!' e1::PrimExpr_c
+   { e.ast = not_ (e1.ast); }
  | 'true' 
    { e.ast = true_(); }
  | 'false'

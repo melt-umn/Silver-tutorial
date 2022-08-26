@@ -40,6 +40,11 @@ e::Expr ::= l::Expr r::Expr
   e.inline = and_ (l.inline, r.inline);
 --  propagate to_inline, inline;
 }
+aspect production not_
+e::Expr ::= e1::Expr
+{
+  e.inline = not_ (e1.inline);
+}
 aspect production true_
 e::Expr ::=
 {

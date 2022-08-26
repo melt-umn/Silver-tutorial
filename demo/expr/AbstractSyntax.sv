@@ -73,6 +73,14 @@ e::Expr ::= l::Expr r::Expr
   r.env = e.env;
 }
 
+production not_
+e::Expr ::= e1::Expr
+{
+  e.pp = "(! (" ++ e1.pp ++ "))";
+  e.val = ! e1.val ;
+  e1.env = e.env;
+}
+
 production true_
 e::Expr ::=
 {

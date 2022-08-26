@@ -6,6 +6,7 @@ terminal IntLit_t /[0-9]+/ ;
    using single quotes. -}
 terminal Or_t     '||' ; 
 terminal And_t    '&&' ; 
+terminal Not_t    '!' ; 
 
 terminal LParen_t '(' ;
 terminal RParen_t ')' ;

@@ -297,7 +297,34 @@
 
 
 \newcommand{\showimplies}{
-\ifthenelse{\boolean{showanim}}{\errc{3.5}{0}\draw (5.5,-0.35) node{inline};}{}
+%\ifthenelse{\boolean{showanim}}{\errc{3.5}{0}\draw (5.5,-0.35) node{inline};}{}
+
+% -0.4
+\envc{1.4}{2}
+\draw (1.65,2.2) node{env};
+
+% +0.4
+\ppc{0.6}{1.5}
+\draw (1.65,1.5) node{pp};
+
+% + 0.8
+\valc{0.2}{1}
+\draw (1.65,1.0) node{val};
+% + 1.2
+\errc{-0.2}{0.5}
+\draw (1.9,0.35) node{inline};
+
+%\envc{3}{3}
+%\draw (3.9,3.85) node{env};
+
+%\ppc{3}{2.5}
+%\draw (3.84,2.5) node{pp};
+
+%\valc{3}{0}
+%\draw (4.88,0.6) node{val};
+
+
+
 
 \tedge{5.5}{3}{6.5}{2}
 \tne{6.5}{2}{\ \ implies}
@@ -346,11 +373,10 @@
 %{\hib{\Large \textsc{ableC} Tutorial}}
 %\vskip 0.75cm
 
-{\Large
-\hib{Attribute Grammars in Silver}
+{\Large\hib{Attribute Grammars in Silver}}
 
 \vskip 0.25cm
-\hib{Composable and Modular Language Specifications}}
+{\large\hib{Composable and Modular Language Specifications}}
 
 \vskip 1cm
 Lucas Kramer and Eric Van Wyk
@@ -367,7 +393,6 @@ August 26, 2022
 %\note{Attribute grammars were invented in 1968 by Donald Knuth as a formalism for specifying the semantics of context free languages. Attributes decorate syntax tree nodes to indicate, for example, the type of an expression or the environment for looking up identifier types or values.  Equations over attributes determine these values. Since then the formalism's popularity had waxed and waned but has been continually extended with new features to become an expressive paradigm for specifying many kinds of analyspes and translations of programming languages.  This talk will cover several of these extensions; including higher-order attributes, in which attributes can themselves be syntax trees, reference attributes, in which attributes are references to other nodes in the decorated tree, and forwarding, a mechanism that supports the composition of language extension specifications.}
 
 %\note{This talk will demonstrate several of these features as they are realized in the Silver attribute grammar system.  Examples are drawn from ableC, an extensible specification of C written in Silver, and several language extensions that add new syntax and static semantics to the C host language.  These include extensions for parallel programming inspired the by Cilk, Halide, and Taco systems, ML-style algebraic data types with pattern matching, regular expression literals and matching, and others.  Silver was designed to support the automatic composition of independently-developed language extensions such as these.  This allows programmers to import new features into their compilers with the same ease as which they import libraries into their programs.  Static analyses and constructs in Silver that support this style of modular language design are a focus of the demonstrations.}
-
 
 
 
@@ -409,8 +434,8 @@ Motivated by 4 questions
 
    \pause
    \bigskip
-   For example, can one add Cilk-style parallelism, algebraic data types,
-   and regular expressions to C?
+   For example, can one add \hir{Cilk-style parallelism}, \hib{algebraic data types},
+   and \hig{regular expressions} to C?
 \ee
 
 \note{\bi
@@ -441,7 +466,7 @@ typedef \hib{datatype Tree} Tree; \\
 
 \cilk{cilk} int count_matches (Tree *t) \ttlbrace \\
   \hib{match (} t \hib{) \ttlbrace} \\
-    \hib{Fork(t1,t2,str): \ttlbrace} \\ 
+    \hib{Fork(t1, t2, str): \ttlbrace} \\ 
       int res_t, res_t1, res_t2;   \\
       \cilk{spawn res_t1 = count_matches(} t1 \cilk{);}  \\
       \cilk{spawn res_t2 = count_matches(} t2 \cilk{);}  \\
@@ -489,9 +514,9 @@ typedef \hib{datatype Tree} Tree; \\
 
 \vskip 0.1cm
 
-\uncover<1->{\exts{algebraicDataTypes}} \\
-\uncover<1->{\exts{cilk}} \\
-\uncover<1->{\exts{regEx}}
+\uncover<1->{\exts{org:fp:algebraicDataTypes}} \\
+\uncover<1->{\exts{com:parallel:cilk}} \\
+\uncover<1->{\exts{net:foo:regEx}}
 
 \uncover<2->{
 $\Downarrow$
@@ -683,7 +708,7 @@ production root
 
 production let
  e::Expr ::= name::String 
-    dval::Expr body::Expr
+    dexp::Expr body::Expr
 
 production or
  e::Expr ::= l::Expr r::Expr
@@ -753,13 +778,17 @@ Can we pretty-print and evaluate the expression
 \small
 \begin{verbatim}
 synthesized attribute pp::String;
+
 synthesized attribute val::Boolean;
 
 inherited attribute 
   env::[(String,Boolean)];
 
+
 attribute pp  occurs on Root, Expr;
+
 attribute val occurs on Root, Expr;
+
 attribute env occurs on Expr;
 \end{verbatim}
 \end{minipage}
@@ -898,18 +927,20 @@ Demand \code{pp}, then demand \code{val} in ``\code{let n = true in false || n}'
 \end{frame}
 
 
-\begin{frame}{Language Extensions - FIXME}
+\begin{frame}{Language Extensions}
 \biA
-\x refactor inlining out into an extension
-\x create the \code{implies} production in another extension
-\x how does implies know about inlining?
-\x this motivates forwarding
+\x Refactor inlining out into an extension
+\x Create the \code{implies} production in another extension
+\x How does implies know about inlining?
+\x This motivates forwarding
 \ei
 \end{frame}
 
+% mv Main.sv into composed
+
 
 \begin{frame}[fragile,t]{Forwarding}
-The ``no glue code'' component.
+``no glue code'' for extensions
 
 {\small
 \begin{verbatim}
@@ -954,7 +985,9 @@ In three parts:
 \end{frame}
 
 
-\begin{frame}{Thanks}
+\begin{frame}
+
+ending slides
 \end{frame}
 
 
@@ -1964,11 +1997,11 @@ production root  r::Root ::= e::Expr
   e.env = emptyEnv();    }
 
 production let
-e::Expr ::= name::String dval::Expr body::Expr
-{ e.pp = "let " ++ name ++ "=" ++ dval.pp + " in " ...;
+e::Expr ::= name::String dexp::Expr body::Expr
+{ e.pp = "let " ++ name ++ "=" ++ dexp.pp + " in " ...;
   e.val = body.val;
-  dval.env = e.env;
-  body.env = addEnv(name, dval.val, e.env);    }
+  dexp.env = e.env;
+  body.env = addEnv(name, dexp.val, e.env);    }
 \end{verbatim}
 \end{frame}
 
