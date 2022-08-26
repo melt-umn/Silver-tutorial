@@ -210,7 +210,7 @@
 \pause\envd{6.5}{2}  %and
 
 \pause
-\draw ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = addEnv(name, dval.val, e.env);}};
+\draw ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = (name, dexp.val) :: e.env;}};
 
 \pause\vald{4}{2} %true-let
 \pause\valc{4}{2} %true-let
@@ -221,7 +221,7 @@
 \pause\envc{6.5}{2}  %and
 
 \pause
-\draw[white] ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = addEnv(name, dval.val, e.env);}};
+%\draw[white] ($(5.5,\ys*-0.5)$) node {\small\texttt{body.env = (name, dexp.val :: e.env;}};
 
 \pause\envc{7.75}{1} %ref
 
@@ -474,12 +474,14 @@ typedef \hib{datatype Tree} Tree; \\
       \cilk{sync;} \\
       \cilk{cilk return} res_t1 + res_t2 + res_t \cilk{;} \\
     \hib{\ttrbrace ;}  \\
-    \hib{Leaf(str): \ttlbrace} return ( str \regex{=~ /foo[1-9]+/} ) ? 1 : 0; \hib{\ttrbrace ;} \\
-  \hib{\ttrbrace}  \\
+    \hib{Leaf(\regex{/foo[1-9]+/}): \ttlbrace} return 1; \hib{\ttrbrace ;} \\
+    \hib{Leaf(_): \ttlbrace} return 0; \hib{\ttrbrace ;} \\
 \ttrbrace
 \end{tabbing}
 \end{alltt}
 \end{frame}
+
+%    \hib{Leaf(str): \ttlbrace} return ( str \regex{=~ /foo[1-9]+/} ) ? 1 : 0; \hib{\ttrbrace ;} \\  \hib{\ttrbrace}  \\
 
 
 \begin{comment}
@@ -799,7 +801,7 @@ attribute env occurs on Expr;
 Let's look at some Silver specifications for this.
 
 \bigskip
-See \code{AbstractSyntax.sv}
+See \code{intro/exprIntro/AbstractSyntax.sv}
 \end{frame}
 
 
@@ -873,7 +875,7 @@ Demand \code{pp}, then demand \code{val} in ``\code{let n = true in false || n}'
     \medskip
     A program transformation to inline the identifies.
 
- \x We see this in \code{Inline.sv}
+ \x We see this in \code{intro/exprIntro/Inline.sv}
 \ei
 \end{frame}
 
@@ -891,7 +893,7 @@ Demand \code{pp}, then demand \code{val} in ``\code{let n = true in false || n}'
  \x \code{inherited}, \code{functor} attributes and others can then
  have equations generated
 
- \x See \code{Inline.sv} again.
+ \x See \code{intro/exprIntro/Inline.sv} again.
 \ei
 \end{frame}
 
@@ -922,29 +924,26 @@ Demand \code{pp}, then demand \code{val} in ``\code{let n = true in false || n}'
 
 \x \code{inherited attribute env :: [ (String, Decorated Decl) ];}
 
-\x This requires a bit of refactoring - \code{Inline\_Refs.sv}
+\x This requires a bit of refactoring - \code{extensible/expr}
 \ei
 \end{frame}
 
 
 \begin{frame}{Language Extensions}
-\biA
-\x Refactor inlining out into an extension
-\x Create the \code{implies} production in another extension
-\x How does implies know about inlining?
-\x This motivates forwarding
-\ei
+\beA
+\x Refactor \code{intro/exprIntro}, creating \code{extensible/expr}
+\x Create the \code{implies} construct in another extension
+\x How does \code{implies} know about inlining? 
+\x This motivates \emph{forwarding}.
+\ee
 \end{frame}
-
-% mv Main.sv into composed
-
 
 \begin{frame}[fragile,t]{Forwarding}
 ``no glue code'' for extensions
 
 {\small
 \begin{verbatim}
-production implies
+production implies_
 e::Expr ::=  l::Expr  r::Expr
 { e.pp = "(" ++ l.pp ++ "=>" ++ r.pp ++ ")";
   forwards to or( not(l), r ); {- expr, not template -}  }
@@ -957,6 +956,18 @@ e::Expr ::=  l::Expr  r::Expr
 
 \end{frame}
 
+\begin{frame}{Extensions to extensions}
+\biA
+\x We are not limited to a flat structure of extensions.
+
+\x Extensions can build on others.
+
+\x This was done to make a regular expression work as a pattern in the
+\code{ableC} example.
+
+\x Here we'll add a translation on top of the inlining.
+\ei
+\end{frame}
 
 \begin{frame}[t]{Modular Well-definedness Analysis}
 How can we ensure that independent extensions will compose?
@@ -985,9 +996,19 @@ In three parts:
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}{Recap:}
+\biA
+\x \textsc{Silver} is an attribute grammar system with support for extensible
+languages and the safe and automatic composition of
+\hig{independently-developed} language extensions. 
 
-ending slides
+\x \textsc{ableC} was a demonstration of this on a significant scale.
+
+\x Further reading:
+\bi \x \url{https://melt.cs.umn.edu}
+    \x The \textsc{ableC} paper: doi - \texttt{10.1145/3138224}
+\ei
+\ei
 \end{frame}
 
 

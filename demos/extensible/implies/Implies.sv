@@ -1,4 +1,6 @@
-grammar expr ;
+grammar implies;
+
+import expr;
 
 terminal Implies_t     '=>' ; 
 

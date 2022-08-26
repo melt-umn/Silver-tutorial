@@ -5,6 +5,9 @@ imports expr;
 parser parse :: Root_c
 {
   expr;
+  inline;
+  implies;
+  translation;
 }
 
 function main 

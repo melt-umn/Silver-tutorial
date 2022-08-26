@@ -36,6 +36,7 @@ The Google Silver tutorial should cover
 5. in expr_extensible, references
    - see second host language - expr
    - add second inlining extension - inline
+     - uncomment command in run_samples
    
 6. forwarding
    - add implication extension

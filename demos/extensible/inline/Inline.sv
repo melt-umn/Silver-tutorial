@@ -1,6 +1,6 @@
--- with references
+grammar inline;
 
-grammar expr;
+import expr;
 
 functor attribute inline occurs on Expr, Root;
 
@@ -25,3 +25,16 @@ e::Expr ::= name::String
 }
 
 
+
+aspect production tasks
+ts::Tasks ::= args::String r::Decorated Root 
+{
+  tasks <- [ print_inlined(r) ];
+}
+
+
+production print_inlined
+t::Task ::= r::Decorated Root
+{
+ t.ioOut = printT ("Inlined: " ++ r.inline.pp ++ "\n\n", t.ioIn);
+}
