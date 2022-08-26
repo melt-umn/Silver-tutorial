@@ -1,4 +1,4 @@
-grammar expr ;
+grammar exprIntro ;
 
 terminal IntLit_t /[0-9]+/ ; 
 

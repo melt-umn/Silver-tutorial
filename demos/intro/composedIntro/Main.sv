@@ -1,10 +1,11 @@
-grammar composed ;
+grammar composedIntro ;
 
-imports expr;
+imports exprIntro;
 
 parser parse :: Root_c
 {
-  expr;
+  exprIntro;
+  inlineIntro;
 }
 
 function main 

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+java -jar composedIntro.jar "let n = true in false || n"
+
+java -jar composedIntro.jar \
+  "let b1 = false in let b2 = b1 || true in b1 && b2"
+
+java -jar composedIntro.jar \
+  "let n = true in true || ! n"
+
