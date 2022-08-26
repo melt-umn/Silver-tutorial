@@ -5,6 +5,6 @@ java -jar composed.jar "let n = true in false || n"
 java -jar composed.jar \
   "let b1 = false in let b2 = b1 || true in b1 && b2"
 
-# java -jar composed.jar \
-#   "let n = true in false => ! n"
+java -jar composed.jar \
+  "let n = true in false => ! n"
 
