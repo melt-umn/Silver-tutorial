@@ -14,16 +14,6 @@ nonterminal OrExpr_c   with ast<Expr>;
 nonterminal AndExpr_c  with ast<Expr>;
 nonterminal PrimExpr_c with ast<Expr>;
 
-{-- without references
-concrete productions e::LetExpr_c
- | 'let' id::Id_t '=' e1::LetExpr_c 'in' e2::LetExpr_c
-   { e.ast = let_ (id.lexeme, e1.ast, e2.ast); }
-
- | e1::OrExpr_c
-   { e.ast = e1.ast; }
---}
-
--- with references
 concrete productions e::LetExpr_c
  | 'let' d::Decl_c '=' e1::LetExpr_c 'in' e2::LetExpr_c
    { e.ast = let_ (d.ast, e1.ast, e2.ast); }
@@ -36,8 +26,6 @@ nonterminal Decl_c with ast<Decl> ;
 concrete productions d::Decl_c
  | id::Id_t
    { d.ast = decl(id.lexeme); }
--- with references
-
 
 concrete productions e::OrExpr_c
  | e1::OrExpr_c '||' e2::AndExpr_c

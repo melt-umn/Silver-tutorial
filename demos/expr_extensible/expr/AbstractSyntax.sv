@@ -7,7 +7,6 @@ synthesized attribute pp :: String;
 attribute pp occurs on Root;
 
 synthesized attribute val :: Boolean occurs on Root;
---inherited attribute env :: [ (String, Boolean) ] 
 inherited attribute env :: [ (String, Decorated Decl) ] ;
 
 production root
@@ -20,18 +19,6 @@ r::Root ::= e::Expr
 
 nonterminal Expr with pp, env, val;
 
-{-- without references
-production let_
-e::Expr ::= name::String dexp::Expr body::Expr
-{
-  e.pp = "(let " ++ name ++ " = " ++ dexp.pp ++ " in " ++ body.pp ++ ")";
-  e.val = body.val;
-  dexp.env = e.env;
-  body.env = (name, dexp.val) :: e.env;
-}
---}
-
--- with references
 production let_
 e::Expr ::= d::Decl dexp::Expr body::Expr
 {
@@ -52,8 +39,6 @@ d::Decl ::= name::String
 {
   d.name = name;
 }
--- with references
-
 
 production or_
 e::Expr ::= l::Expr r::Expr
